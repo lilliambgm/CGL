@@ -41,7 +41,7 @@ public class Cell {
                     {this.location[0] - 1, this.location[1] + 1},
                     {this.location[0], this.location[1] + 1}
             };
-        } else if (this.location[0] == max_width - 1 && this.location[1] == max_width - 1) {
+        } else if (this.location[0] == max_height - 1 && this.location[1] == max_width - 1) {
             // System.out.println("This is the bottom right corner");
             this.neighbours = new int[][] {
                     {this.location[0] - 1, this.location[1] - 1},
@@ -118,5 +118,9 @@ public class Cell {
 
     public int[][] getNeighbours() {
         return neighbours;
+    }
+
+    public int[] getLocation() {
+        return location;
     }
 }
