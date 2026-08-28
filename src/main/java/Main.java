@@ -1,5 +1,7 @@
-import main.java.Game;
+package main.java;
 
-void main(String[] args) {
-    Game game = new Game();
+public class Main {
+    void main(String[] args) {
+        Game game = new Game();
+    }
 }
