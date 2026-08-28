@@ -1,6 +1,5 @@
 package main.java;
 
-import java.util.Arrays;
 import java.util.Scanner;
 import static main.java.Helper.intPrompter;
 
