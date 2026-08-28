@@ -60,13 +60,14 @@ public class Game {
         for (int i = 0; i < this.height; i++) {
             for (int j = 0; j < this.width; j++) {
                 if (this.game[i][j].getState()) {
-                    System.out.print("0");
+                    System.out.print("█");
                 } else {
-                    System.out.print("-");
+                    System.out.print(" ");
                 }
             }
             System.out.println();
         }
+        System.out.println("Press enter to continue, and any other key to end the program.");
     }
 
     private void updateOldFrameStates() {
