@@ -1,5 +1,6 @@
 package main.java;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import static main.java.Helper.intPrompter;
 
@@ -84,23 +85,17 @@ public class Game {
         }
     }
 
-    private void updateLivingNeighbours() {
+    private void updateGame() {
         for (Cell[] row : this.game) {
-            for (Cell cell : row) {
+            for (Cell cell :row) {
+//                System.out.println("Current cell being checked: " + Arrays.toString(cell.getLocation()));
                 cell.liveNeighbourCount = 0;
                 for (int[] neighbour : cell.getNeighbours()) {
+//                    System.out.println("Current neighbour to be checked: " + Arrays.toString(neighbour));
                     if (this.oldFrameState[neighbour[0]][neighbour[1]]) {
                         cell.liveNeighbourCount++;
                     }
                 }
-            }
-        }
-    }
-
-    private void updateGame() {
-        updateLivingNeighbours();
-        for (Cell[] row :this.game) {
-            for (Cell cell :row) {
                 cell.updateCellState();
             }
         }
