@@ -4,17 +4,25 @@ import java.lang.Math;
 import java.util.Arrays;
 
 public class Cell {
+    private static int WEIGHT = 0;
     private boolean state;
     private final int[] location;
     private int[][] neighbours;
     protected int liveNeighbourCount;
 
+    //<editor-fold desc="Constructors">
     public Cell(int[] location) {
         this.location = location;
-        setStarterState();
+        setStarterState(WEIGHT);
     }
+    //</editor-fold>
 
     private void setStarterState() {
+        double random = Math.random();
+        this.state = !(random < 0.5);
+    }
+
+    private void setStarterState(int WEIGHT) {
         double random = Math.random();
         this.state = !(random < 0.5);
     }
@@ -112,6 +120,7 @@ public class Cell {
         }
     }
 
+    //<editor-fold desc="Getters">
     public boolean getState() {
         return this.state;
     }
@@ -122,5 +131,11 @@ public class Cell {
 
     public int[] getLocation() {
         return location;
+    }
+    //</editor-fold>
+
+
+    public static void setWEIGHT(int WEIGHT) {
+        Cell.WEIGHT = WEIGHT;
     }
 }

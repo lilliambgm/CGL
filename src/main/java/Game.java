@@ -2,6 +2,7 @@ package main.java;
 
 import java.util.Scanner;
 import static main.java.Helper.intPrompter;
+import static main.java.Helper.boolPrompter;
 
 public class Game {
     private final int width;
@@ -9,6 +10,7 @@ public class Game {
     private Cell[][] game;
     private boolean[][] oldFrameState;
     private int frameCount = 0;
+    private boolean USINGWEIGHT = false;
 
     public Game () {
         Scanner input = new Scanner(System.in);
@@ -16,6 +18,7 @@ public class Game {
         // Ask for the width and height of the game, and writing that to the game object.
         this.width = intPrompter("What would you like the width of your game to be?");
         this.height = intPrompter("What would you like the height of your game to be?");
+        this.USINGWEIGHT = boolPrompter("Would you like to set the living cell weight?");
 
         // Create the game.
         createGame();
