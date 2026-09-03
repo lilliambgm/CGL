@@ -2,6 +2,7 @@ package main.java;
 
 import java.util.Scanner;
 import static main.java.Helper.intPrompter;
+import static main.java.Helper.boolPrompter;
 
 public class Game {
     private final int width;
@@ -9,6 +10,7 @@ public class Game {
     private Cell[][] game;
     private boolean[][] oldFrameState;
     private int frameCount = 0;
+    private final int weight;
 
     public Game () {
         Scanner input = new Scanner(System.in);
@@ -16,6 +18,16 @@ public class Game {
         // Ask for the width and height of the game, and writing that to the game object.
         this.width = intPrompter("What would you like the width of your game to be?");
         this.height = intPrompter("What would you like the height of your game to be?");
+
+        // Ask if user wants to set a weight manually
+        boolean usingWeight = boolPrompter("Would you like to set the living cell weight?");
+
+        // Set user provided weight, or use default depending on the previous prompt result.
+        if (usingWeight) {
+            this.weight = intPrompter("What would you like your weight to be? Enter a value between -49 and 49", -49, 49);
+        } else {
+            this.weight = 0;
+        }
 
         // Create the game.
         createGame();
@@ -28,7 +40,11 @@ public class Game {
 
         // Waiting for the user input to advance the frame, or exit the game.
         String userInput = input.nextLine();
-        while (userInput.equals("Next") || userInput.equals("next") || userInput.equals("N") || userInput.equals("n") || userInput.isBlank()) {
+        while (userInput.equals("Next")
+                || userInput.equals("next")
+                || userInput.equals("N")
+                || userInput.equals("n")
+                || userInput.isBlank()) {
             updateGame();
             userInput = input.nextLine();
         }
@@ -37,7 +53,7 @@ public class Game {
     private void frameNeighbourDetermination() {
         for (int i = 0; i < this.height; i++) {
             for (int j = 0; j < this.width; j++) {
-                this.game[i][j].determineNeighbours(this.height, this.width);
+                this.game[i][j].determineNeighbours();
             }
         }
     }
@@ -48,7 +64,7 @@ public class Game {
         for (int i = 0; i < this.height; i++) {
             for (int j = 0; j < this.width; j++) {
                 int[] location = {i, j};
-                this.game[i][j] = new Cell(location);
+                this.game[i][j] = new Cell(location, this, this.weight);
             }
         }
     }
@@ -66,7 +82,7 @@ public class Game {
             }
             System.out.println();
         }
-        System.out.println("Press enter to continue, and any other key to end the program.");
+        IO.println("Press enter to continue, and any other key to end the program.");
     }
 
     private void updateOldFrameStates() {
@@ -101,5 +117,10 @@ public class Game {
         }
         updateOldFrameStates();
         writeFrame();
+    }
+
+    public boolean isValidLocation(int[] toCheck) {
+        return toCheck[0] >= 0 && toCheck[0] < this.height &&
+               toCheck[1] >= 0 && toCheck[1] < this.width;
     }
 }

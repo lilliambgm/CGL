@@ -1,103 +1,46 @@
 package main.java;
 
-import java.lang.Math;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Cell {
+    private final Game game;
     private boolean state;
     private final int[] location;
     private int[][] neighbours;
     protected int liveNeighbourCount;
 
-    public Cell(int[] location) {
+    //<editor-fold desc="Constructors">
+    public Cell(int[] location, Game game, int weight) {
         this.location = location;
-        setStarterState();
+        this.game = game;
+        setStarterState(weight);
     }
+    //</editor-fold>
 
-    private void setStarterState() {
+    private void setStarterState(int weight) {
         double random = Math.random();
-        this.state = !(random < 0.5);
+        this.state = random < 0.5 + ((double) weight / 100);
     }
 
-    public void determineNeighbours(int max_height, int max_width) {
-        if (this.location[0] == 0 && this.location[1] == 0) {
-            // System.out.println("This is the top left corner.");
-            this.neighbours = new int[][] {
-                    {this.location[0], this.location[1] + 1},
-                    {this.location[0] + 1, this.location[1]},
-                    {this.location[0] + 1, this.location[1] + 1}
-            };
-        } else if (this.location[0] == 0 && this.location[1] == max_width - 1) {
-            // System.out.println("This is the top right corner");
-            this.neighbours = new int[][] {
-                    {this.location[0], this.location[1] - 1},
-                    {this.location[0] + 1, this.location[1] - 1},
-                    {this.location[0] + 1, this.location[1]}
-            };
-        } else if (this.location[0] == max_height - 1 && this.location[1] == 0) {
-            // System.out.println("This is the bottom left corner");
-            this.neighbours = new int[][] {
-                    {this.location[0] - 1, this.location[1]},
-                    {this.location[0] - 1, this.location[1] + 1},
-                    {this.location[0], this.location[1] + 1}
-            };
-        } else if (this.location[0] == max_height - 1 && this.location[1] == max_width - 1) {
-            // System.out.println("This is the bottom right corner");
-            this.neighbours = new int[][] {
-                    {this.location[0] - 1, this.location[1] - 1},
-                    {this.location[0] - 1, this.location[1]},
-                    {this.location[0], this.location[1] - 1}
-            };
-        } else if (this.location[0] == 0) {
-            // System.out.println("this is the top row.");
-            this.neighbours = new int[][] {
-                    {this.location[0], this.location[1] - 1},
-                    {this.location[0], this.location[1] + 1},
-                    {this.location[0] + 1, this.location[1] - 1},
-                    {this.location[0] + 1, this.location[1]},
-                    {this.location[0] + 1, this.location[1] + 1}
-            };
-        } else if (this.location[1] == 0) {
-            // System.out.println("This is the left column");
-            this.neighbours = new int[][] {
-                    {this.location[0] - 1, this.location[1]},
-                    {this.location[0] - 1, this.location[1] + 1},
-                    {this.location[0], this.location[1] + 1},
-                    {this.location[0] + 1, this.location[1]},
-                    {this.location[0] + 1, this.location[1] + 1}
-            };
-        } else if (this.location[1] == max_width - 1) {
-            // System.out.println("This is the right column");
-            this.neighbours = new int[][] {
-                    {this.location[0] - 1, this.location[1]},
-                    {this.location[0] - 1, this.location[1] - 1},
-                    {this.location[0], this.location[1] - 1},
-                    {this.location[0] + 1, this.location[1]},
-                    {this.location[0] + 1, this.location[1] - 1}
-            };
-        } else if (this.location[0] == max_height - 1) {
-            // System.out.println("This is the bottom row");
-            this.neighbours = new int[][] {
-                    {this.location[0], this.location[1] - 1},
-                    {this.location[0], this.location[1] + 1},
-                    {this.location[0] - 1, this.location[1] - 1},
-                    {this.location[0] - 1, this.location[1]},
-                    {this.location[0] - 1, this.location[1] + 1}
-            };
-        } else {
-            // System.out.println("This is not an edge");
-            this.neighbours = new int[][] {
-                    {this.location[0] - 1, this.location[1] -1},
-                    {this.location[0] - 1, this.location[1]},
-                    {this.location[0] - 1, this.location[1] + 1},
-                    {this.location[0], this.location[1] - 1},
-                    {this.location[0], this.location[1] + 1},
-                    {this.location[0] + 1, this.location[1] - 1},
-                    {this.location[0] + 1, this.location[1]},
-                    {this.location[0] + 1, this.location[1] + 1}
-            };
+    public void determineNeighbours() {
+        List<int[]> neighbourList = new ArrayList<>();
+
+        for (int rowOffset = -1; rowOffset <= 1; rowOffset++) {
+            for (int colOffset = -1; colOffset <= 1; colOffset++) {
+                if (rowOffset == 0 && colOffset == 0) {
+                    continue;
+                }
+
+                int[] toCheck = {this.location[0] + rowOffset, this.location[1] + colOffset};
+
+                if (game.isValidLocation(toCheck)) {
+                    neighbourList.add(toCheck);
+                }
+            }
         }
-        // System.out.println("Neighbours: " + Arrays.deepToString(this.neighbours));
+
+        this.neighbours = neighbourList.toArray(new int[0][]);
     }
 
     public void updateCellState() {
@@ -112,6 +55,7 @@ public class Cell {
         }
     }
 
+    //<editor-fold desc="Getters">
     public boolean getState() {
         return this.state;
     }
@@ -123,4 +67,5 @@ public class Cell {
     public int[] getLocation() {
         return location;
     }
+    //</editor-fold>
 }
