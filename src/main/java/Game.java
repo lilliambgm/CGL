@@ -19,15 +19,17 @@ public class Game {
         this.width = intPrompter("What would you like the width of your game to be?");
         this.height = intPrompter("What would you like the height of your game to be?");
 
+        // Ask if user wants to set a weight manually
         boolean usingWeight = boolPrompter("Would you like to set the living cell weight?");
 
-        // Create the game.
+        // Set user provided weight, or use default depending on the previous prompt result.
         if (usingWeight) {
             this.weight = intPrompter("What would you like your weight to be? Enter a value between -49 and 49", -49, 49);
         } else {
             this.weight = 0;
         }
 
+        // Create the game.
         createGame();
         // Determine all cells neighbours
         frameNeighbourDetermination();
