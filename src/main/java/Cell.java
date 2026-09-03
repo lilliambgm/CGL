@@ -1,11 +1,9 @@
 package main.java;
 
-import java.lang.Math;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cell {
-    private static int WEIGHT = 0;
     private final Game game;
     private boolean state;
     private final int[] location;
@@ -13,21 +11,16 @@ public class Cell {
     protected int liveNeighbourCount;
 
     //<editor-fold desc="Constructors">
-    public Cell(int[] location, Game game) {
+    public Cell(int[] location, Game game, int weight) {
         this.location = location;
         this.game = game;
-        setStarterState(WEIGHT);
+        setStarterState(weight);
     }
     //</editor-fold>
 
-    private void setStarterState() {
+    private void setStarterState(int weight) {
         double random = Math.random();
-        this.state = !(random < 0.5);
-    }
-
-    private void setStarterState(int WEIGHT) {
-        double random = Math.random();
-        this.state = !(random < 0.5 + WEIGHT);
+        this.state = random < 0.5 + ((double) weight / 100);
     }
 
     public void determineNeighbours() {
@@ -75,9 +68,4 @@ public class Cell {
         return location;
     }
     //</editor-fold>
-
-
-    public static void setWEIGHT(int WEIGHT) {
-        Cell.WEIGHT = WEIGHT;
-    }
 }
