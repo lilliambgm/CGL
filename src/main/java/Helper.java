@@ -31,10 +31,9 @@ public class Helper {
 
         while (true) {
             String answer = input.nextLine();
-            int intAnswer;
 
             try {
-                intAnswer = Integer.parseInt(answer);
+                int intAnswer = Integer.parseInt(answer);
                 if (intAnswer >= lowerLimit && intAnswer <= upperLimit) {
                     return intAnswer;
                 }
@@ -42,7 +41,7 @@ public class Helper {
                 // Invalid integer; Fall through to the error message.
             }
 
-            IO.println("Please enter a whole number between" + lowerLimit + " and " + upperLimit);
+            IO.println("Please enter a whole number between " + lowerLimit + " and " + upperLimit);
         }
     }
 
