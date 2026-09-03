@@ -40,7 +40,7 @@ public class Game {
     private void frameNeighbourDetermination() {
         for (int i = 0; i < this.height; i++) {
             for (int j = 0; j < this.width; j++) {
-                this.game[i][j].determineNeighbours(this.height, this.width);
+                this.game[i][j].determineNeighbours();
             }
         }
     }
@@ -51,7 +51,7 @@ public class Game {
         for (int i = 0; i < this.height; i++) {
             for (int j = 0; j < this.width; j++) {
                 int[] location = {i, j};
-                this.game[i][j] = new Cell(location);
+                this.game[i][j] = new Cell(location, this);
             }
         }
     }
@@ -104,5 +104,10 @@ public class Game {
         }
         updateOldFrameStates();
         writeFrame();
+    }
+
+    public boolean isValidLocation(int[] toCheck) {
+        return toCheck[0] >= 0 && toCheck[0] < this.height &&
+               toCheck[1] >= 0 && toCheck[1] < this.width;
     }
 }
