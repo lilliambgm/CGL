@@ -40,10 +40,8 @@ public class Game {
 
         // Waiting for the user input to advance the frame, or exit the game.
         String userInput = input.nextLine();
-        while (userInput.equals("Next")
-                || userInput.equals("next")
-                || userInput.equals("N")
-                || userInput.equals("n")
+        while (userInput.equalsIgnoreCase("next")
+                || userInput.equalsIgnoreCase("n")
                 || userInput.isBlank()) {
             updateGame();
             userInput = input.nextLine();
@@ -72,15 +70,15 @@ public class Game {
     public void writeFrame() {
         this.frameCount++;
         System.out.printf("Frame %3$d of your randomly generated Game of Life with height %1$d and width %2$d:\n", this.height, this.width, this.frameCount);
-        for (int i = 0; i < this.height; i++) {
-            for (int j = 0; j < this.width; j++) {
-                if (this.game[i][j].getState()) {
-                    System.out.print("█");
-                } else {
-                    System.out.print(" ");
+        for (Cell[] row : this.game) {
+            for (Cell cell : row) {
+                if (cell.getState()) {
+                    IO.print("█");
+                } else  {
+                    IO.print(" ");
                 }
             }
-            System.out.println();
+            IO.println();
         }
         IO.println("Press enter to continue, and any other key to end the program.");
     }
@@ -103,7 +101,7 @@ public class Game {
 
     private void updateGame() {
         for (Cell[] row : this.game) {
-            for (Cell cell :row) {
+            for (Cell cell : row) {
 //                System.out.println("Current cell being checked: " + Arrays.toString(cell.getLocation()));
                 cell.liveNeighbourCount = 0;
                 for (int[] neighbour : cell.getNeighbours()) {
