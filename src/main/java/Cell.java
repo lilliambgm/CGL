@@ -10,6 +10,12 @@ public class Cell {
     private int[][] neighbours;
     protected int liveNeighbourCount;
 
+    /**
+     * Constructs the cell object, with which the game grid will be filled
+     * @param location the location of the current cell
+     * @param game the reference of the current game for when non-static game methods are called
+     * @param weight the living cell weight, used as bias for cell generation
+     */
     public Cell(int[] location, Game game, int weight) {
         this.location = location;
         this.game = game;
