@@ -10,13 +10,11 @@ public class Cell {
     private int[][] neighbours;
     protected int liveNeighbourCount;
 
-    //<editor-fold desc="Constructors">
     public Cell(int[] location, Game game, int weight) {
         this.location = location;
         this.game = game;
         setStarterState(weight);
     }
-    //</editor-fold>
 
     private void setStarterState(int weight) {
         double random = Math.random();
