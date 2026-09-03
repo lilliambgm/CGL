@@ -27,6 +27,10 @@ public class Helper {
     }
 
     public static int intPrompter(String question, int lowerLimit, int upperLimit) {
+        if (lowerLimit > upperLimit) {
+            throw new IllegalArgumentException("lowerLimit must be less than upperLimit");
+        }
+
         IO.println(question);
 
         while (true) {
