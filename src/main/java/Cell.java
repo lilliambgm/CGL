@@ -27,7 +27,7 @@ public class Cell {
         this.state = random < 0.5 + ((double) weight / 100);
     }
 
-    public void determineNeighbours() {
+    public void calculateNeighbours() {
         List<int[]> neighbourList = new ArrayList<>();
 
         for (int rowOffset = -1; rowOffset <= 1; rowOffset++) {
@@ -36,7 +36,10 @@ public class Cell {
                     continue;
                 }
 
-                int[] toCheck = {this.location[0] + rowOffset, this.location[1] + colOffset};
+                int[] toCheck = {
+                        this.location[0] + rowOffset,
+                        this.location[1] + colOffset
+                };
 
                 if (game.isValidLocation(toCheck)) {
                     neighbourList.add(toCheck);
