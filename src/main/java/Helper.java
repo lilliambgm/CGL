@@ -66,7 +66,7 @@ public class Helper {
                        answer.equalsIgnoreCase("n")) {
                 return false;
             } else {
-                System.out.println("Invalid input, please type \"yes\" (y) or \"no\" (n)");
+                System.out.println("Invalid input, please type \"yes\" (y) or \"no\" (n).");
             }
         }
     }
