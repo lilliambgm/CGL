@@ -7,6 +7,7 @@ import static main.java.Helper.boolPrompter;
 public class Game {
     private final int width;
     private final int height;
+    private final int totalCells;
     private Cell[][] game;
     private boolean[][] previousGeneration;
     private int generation = 0;
@@ -18,6 +19,7 @@ public class Game {
         // Ask for the width and height of the game, and writing that to the game object.
         this.width = intPrompter("What would you like the width of your game to be?");
         this.height = intPrompter("What would you like the height of your game to be?");
+        this.totalCells = this.width * this.height;
 
         // Ask if user wants to set a weight manually
         boolean usingWeight = boolPrompter("Would you like to set the living cell weight?");
@@ -32,32 +34,24 @@ public class Game {
         // Create the game.
         createGame();
         // Determine all cells neighbours
-        frameNeighbourDetermination();
-        // Write the initial frame.
-        writeFrame();
+        initialiseNeighbours();
+        // Write the initial generation.
+        writeGeneration();
         // Updating previousGeneration to carry the cell states.
-        updateOldFrameStates();
+        savePreviousGeneration();
 
-        // Waiting for the user input to advance the frame, or exit the game.
+        // Waiting for the user input to advance the generation, or exit the game.
         String userInput = input.nextLine();
         while (userInput.equalsIgnoreCase("next")
                 || userInput.equalsIgnoreCase("n")
                 || userInput.isBlank()) {
-            updateGame();
+            advanceGeneration();
             userInput = input.nextLine();
         }
     }
 
-    private void frameNeighbourDetermination() {
-        for (int i = 0; i < this.height; i++) {
-            for (int j = 0; j < this.width; j++) {
-                this.game[i][j].determineNeighbours();
-            }
-        }
-    }
-
     private void createGame() {
-        // Creating the first frame by filling the gameCells matrix with cells.
+        // Creating the first generation by filling the gameCells matrix with cells.
         this.game = new Cell[this.height][this.width];
         for (int i = 0; i < this.height; i++) {
             for (int j = 0; j < this.width; j++) {
@@ -67,9 +61,17 @@ public class Game {
         }
     }
 
-    public void writeFrame() {
+    private void initialiseNeighbours() {
+        for (Cell[] row : game) {
+            for (Cell cell : row) {
+                cell.calculateNeighbours();
+            }
+        }
+    }
+
+    public void writeGeneration() {
         this.generation++;
-        System.out.printf("Frame %3$d of your randomly generated Game of Life with height %1$d and width %2$d:\n", this.height, this.width, this.generation);
+        System.out.printf("Generation %3$d of your randomly generated Game of Life with height %1$d and width %2$d (%4$d total cells):\n", this.height, this.width, this.generation, this.totalCells);
         for (Cell[] row : this.game) {
             for (Cell cell : row) {
                 if (cell.getState()) {
@@ -83,7 +85,7 @@ public class Game {
         IO.println("Press enter to continue, and any other key to end the program.");
     }
 
-    private void updateOldFrameStates() {
+    private void savePreviousGeneration() {
         // System.out.println("This is the old game state");
         this.previousGeneration = new boolean[this.height][this.width];
         for (int i = 0; i < this.height; i++) {
@@ -99,7 +101,7 @@ public class Game {
         }
     }
 
-    private void updateGame() {
+    private void advanceGeneration() {
         for (Cell[] row : this.game) {
             for (Cell cell : row) {
 //                System.out.println("Current cell being checked: " + Arrays.toString(cell.getLocation()));
@@ -113,8 +115,8 @@ public class Game {
                 cell.updateCellState();
             }
         }
-        updateOldFrameStates();
-        writeFrame();
+        savePreviousGeneration();
+        writeGeneration();
     }
 
     public boolean isValidLocation(int[] toCheck) {
