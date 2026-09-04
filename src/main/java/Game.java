@@ -8,8 +8,8 @@ public class Game {
     private final int width;
     private final int height;
     private Cell[][] game;
-    private boolean[][] oldFrameState;
-    private int frameCount = 0;
+    private boolean[][] previousGeneration;
+    private int generation = 0;
     private final int weight;
 
     public Game () {
@@ -35,7 +35,7 @@ public class Game {
         frameNeighbourDetermination();
         // Write the initial frame.
         writeFrame();
-        // Updating oldFrameState to carry the cell states.
+        // Updating previousGeneration to carry the cell states.
         updateOldFrameStates();
 
         // Waiting for the user input to advance the frame, or exit the game.
@@ -68,8 +68,8 @@ public class Game {
     }
 
     public void writeFrame() {
-        this.frameCount++;
-        System.out.printf("Frame %3$d of your randomly generated Game of Life with height %1$d and width %2$d:\n", this.height, this.width, this.frameCount);
+        this.generation++;
+        System.out.printf("Frame %3$d of your randomly generated Game of Life with height %1$d and width %2$d:\n", this.height, this.width, this.generation);
         for (Cell[] row : this.game) {
             for (Cell cell : row) {
                 if (cell.getState()) {
@@ -85,10 +85,10 @@ public class Game {
 
     private void updateOldFrameStates() {
         // System.out.println("This is the old game state");
-        this.oldFrameState = new boolean[this.height][this.width];
+        this.previousGeneration = new boolean[this.height][this.width];
         for (int i = 0; i < this.height; i++) {
             for (int j = 0; j < this.width; j++) {
-                this.oldFrameState[i][j] = this.game[i][j].getState();
+                this.previousGeneration[i][j] = this.game[i][j].getState();
 //                if (this.game[i][j].getState()) {
 //                    System.out.print("0");
 //                } else {
@@ -106,7 +106,7 @@ public class Game {
                 cell.liveNeighbourCount = 0;
                 for (int[] neighbour : cell.getNeighbours()) {
 //                    System.out.println("Current neighbour to be checked: " + Arrays.toString(neighbour));
-                    if (this.oldFrameState[neighbour[0]][neighbour[1]]) {
+                    if (this.previousGeneration[neighbour[0]][neighbour[1]]) {
                         cell.liveNeighbourCount++;
                     }
                 }
