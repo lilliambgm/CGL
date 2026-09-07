@@ -1,8 +1,8 @@
 package main.java;
 
 import java.util.Scanner;
-import static main.java.Helper.intPrompter;
-import static main.java.Helper.boolPrompter;
+import static LilliamBGM.util.Prompters.intPrompter;
+import static LilliamBGM.util.Prompters.boolPrompter;
 
 public class Game {
     private final int width;
@@ -13,6 +13,9 @@ public class Game {
     private int generation = 0;
     private final int weight;
 
+    /**
+     *
+     */
     public Game () {
         Scanner input = new Scanner(System.in);
 
