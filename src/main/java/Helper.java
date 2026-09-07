@@ -51,9 +51,9 @@ public class Helper {
 
     /**
      * Prompts yes or no (boolean) question.
-     * @param question The question to be asked.
+     * @param question the question to be asked.
      * @return {@code true} if answer is a variation of "yes",
- *             {@code false} if answer is a variation of "no".
+     *         {@code false} if answer is a variation of "no".
      */
     public static boolean boolPrompter(String question) {
         System.out.println(question);
