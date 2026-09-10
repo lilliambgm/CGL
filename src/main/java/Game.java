@@ -14,7 +14,11 @@ public class Game {
     private final int weight;
 
     /**
-     *
+     * <p>The main game loop of this Game of Life. Thought it can use some
+     * clean-up as this is rather quite bulky, and I think a few of these
+     * things can be distilled into their own functions.</p>
+     * <p>Either way, this asks for the width, height and whether to use a custom
+     * cell weight. If yes, it will also ask for that custom cell weight.</p>
      */
     public Game () {
         Scanner input = new Scanner(System.in);
