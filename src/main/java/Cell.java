@@ -5,10 +5,10 @@ import java.util.List;
 
 public class Cell {
     private final Game game;
-    private boolean state;
     private final int[] location;
-    private int[][] neighbours;
     protected int liveNeighbourCount;
+    private int[][] neighbours;
+    private boolean state;
 
     /**
      * Constructs the cell object, with which the game grid will be filled
