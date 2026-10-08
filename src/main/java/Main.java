@@ -1,5 +1,7 @@
 package main.java;
 
+import static LilliamBGM.util.Dumpers.dumpMethods;
+
 /**
  * Conway's Game of Life
  * Rules:
@@ -23,6 +25,8 @@ package main.java;
 
 public class Main {
     void main(String[] args) {
+        dumpMethods("main.java.Game");
+        dumpMethods("main.java.Cell");
         Game game = new Game();
     }
 }
