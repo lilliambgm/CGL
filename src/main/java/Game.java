@@ -8,13 +8,13 @@ public class Game {
     private final int width;
     private final int height;
     private final int totalCells;
-    private Cell[][] game;
-    private boolean[][] previousGeneration;
-    private int generation = 0;
     private final int weight;
+    private boolean[][] previousGeneration;
+    private Cell[][] game;
+    private int generation = 0;
 
     /**
-     * <p>The main game loop of this Game of Life. Thought it can use some
+     * <p>The main game loop of this Game of Life. Though it can use some
      * clean-up as this is rather quite bulky, and I think a few of these
      * things can be distilled into their own functions.</p>
      * <p>Either way, this asks for the width, height and whether to use a custom
