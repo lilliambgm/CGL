@@ -1,8 +1,8 @@
 package main.java;
 
 import java.util.Scanner;
-import static LilliamBGM.util.Prompters.intPrompter;
-import static LilliamBGM.util.Prompters.boolPrompter;
+import static LilliamBGM.util.Prompters.promptInt;
+import static LilliamBGM.util.Prompters.promptBoolean;
 
 public class Game {
     private final int width;
@@ -24,16 +24,16 @@ public class Game {
         Scanner input = new Scanner(System.in);
 
         // Ask for the width and height of the game, and writing that to the game object.
-        this.width = intPrompter("What would you like the width of your game to be?");
-        this.height = intPrompter("What would you like the height of your game to be?");
+        this.width = promptInt("What would you like the width of your game to be?");
+        this.height = promptInt("What would you like the height of your game to be?");
         this.totalCells = this.width * this.height;
 
         // Ask if user wants to set a weight manually
-        boolean usingWeight = boolPrompter("Would you like to set the living cell weight?");
+        boolean usingWeight = promptBoolean("Would you like to set the living cell weight?");
 
         // Set user provided weight, or use default depending on the previous prompt result.
         if (usingWeight) {
-            this.weight = intPrompter("What would you like your weight to be? Enter a value between -49 and 49", -49, 49);
+            this.weight = promptInt("What would you like your weight to be? Enter a value between -49 and 49", -49, 49);
         } else {
             this.weight = 0;
         }
