@@ -25,8 +25,6 @@ import static LilliamBGM.util.Dumpers.dumpMethods;
 
 public class Main {
     void main(String[] args) {
-        dumpMethods("main.java.Game");
-        dumpMethods("main.java.Cell");
         Game game = new Game();
     }
 }
